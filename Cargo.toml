@@ -1,10 +1,11 @@
 [package]
 name = "totally-safe-transmute"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Benjamin Herr <ben@0x539.de>"]
 edition = "2018"
 description = "I'm sure it's fine."
 license = "AGPL-3.0-or-later"
+repository = "https://github.com/ben0x539/totally-safe-transmute"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
