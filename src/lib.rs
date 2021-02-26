@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use std::{io::{self, Write, Seek}, fs};
 
 pub fn totally_safe_transmute<T, U>(v: T) -> U {
