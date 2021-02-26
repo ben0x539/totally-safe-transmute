@@ -1,6 +1,6 @@
 [package]
 name = "totally-safe-transmute"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Benjamin Herr <ben@0x539.de>"]
 edition = "2018"
 description = "I'm sure it's fine."
