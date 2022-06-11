@@ -38,7 +38,7 @@ pub fn totally_safe_transmute<T, U>(v: T) -> U {
                 .open("/proc/self/mem").unwrap()
                 .write_all_at(&[1u8], addr_of!(v) as u64).unwrap();
         } else {
-            unsupported
+            compile_error!("dear user, im scared");
         }
     }
 
