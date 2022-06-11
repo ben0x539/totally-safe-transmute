@@ -9,7 +9,7 @@ use std::{fs, os::unix::prelude::FileExt};
 use process_memory::{PutAddress, TryIntoProcessHandle};
 
 pub fn totally_safe_transmute<T, U>(v: T) -> U {
-    #[repr(C)]
+    #[repr(u8)]
     enum E<T, U> {
         T(T),
         #[allow(dead_code)]
@@ -25,18 +25,18 @@ pub fn totally_safe_transmute<T, U>(v: T) -> U {
             fs::OpenOptions::new()
                 .write(true)
                 .open(format!("proc:{own_pid}/mem")).unwrap()
-                .write_all_at(&[1], addr_of!(v) as u64).unwrap();
+                .write_all_at(&[1u8], addr_of!(v) as u64).unwrap();
         } else if #[cfg(any(target_os = "windows", target_os = "macos"))] {
             //unloved fallback
             //unneeded "protect" call
             let handle: process_memory::ProcessHandle = (std::process::id() as process_memory::Pid).try_into_process_handle().unwrap();
-            handle.put_address(addr_of!(v) as usize, &[1]).unwrap();
+            handle.put_address(addr_of!(v) as usize, &[1u8]).unwrap();
         } else if #[cfg(unix)] {
             //https://man7.org/linux/man-pages/man5/proc.5.html
             fs::OpenOptions::new()
                 .write(true)
                 .open("/proc/self/mem").unwrap()
-                .write_all_at(&[1], addr_of!(v) as u64).unwrap();
+                .write_all_at(&[1u8], addr_of!(v) as u64).unwrap();
         } else {
             unsupported
         }
