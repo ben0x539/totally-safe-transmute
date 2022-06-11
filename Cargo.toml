@@ -9,4 +9,8 @@ repository = "https://github.com/ben0x539/totally-safe-transmute"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[target.'cfg(any(target_os = "windows", target_os = "macos"))'.dependencies]
+process-memory = "*"
+
 [dependencies]
+cfg-if = "*"
