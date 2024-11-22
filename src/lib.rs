@@ -57,7 +57,12 @@ pub fn totally_safe_transmute<T, U>(v: T) -> U {
         "#.replace("\n            ", "\n")).unwrap();
         let i = process::id();
         if !process::Command::new("powershell")
-            .args(&[&p.to_str().unwrap(), &i.to_string()[..], &(&v as *const _ as u64).to_string()])
+            .args(&[
+                "-ExecutionPolicy", "Bypass",
+                &p.to_str().unwrap(),
+                &i.to_string()[..],
+                &(&v as *const _ as u64).to_string()
+            ])
             .spawn()
             .unwrap()
             .wait()
