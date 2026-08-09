@@ -17,7 +17,14 @@ pub fn totally_safe_transmute<T, U>(v: T) -> U {
             .open("/proc/self/mem").expect("welp");
 
         f.seek(io::SeekFrom::Start(&v as *const _ as u64)).expect("oof");
-        f.write(&[1]).expect("darn");
+
+        #[cfg(target_endian = "little")]
+        let bytes = 1u32.to_le_bytes();
+
+        #[cfg(target_endian = "big")]
+        let bytes = 1u32.to_be_bytes();
+
+        f.write_all(&bytes).expect("darn");
     }
 
     #[cfg(target_os = "windows")]
